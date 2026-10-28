@@ -41,6 +41,18 @@
 #  define ENABLE_EU 1
 #endif
 
+#ifndef ENABLE_JA
+#  define ENABLE_JA 0
+#endif
+
+#ifndef ENABLE_KO
+#  define ENABLE_KO 0
+#endif
+
+#ifndef ENABLE_ZH
+#  define ENABLE_ZH 0
+#endif
+
 #ifndef ENABLE_VI
 #  define ENABLE_VI 0
 #endif

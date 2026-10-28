@@ -174,7 +174,8 @@ const char* const STRTAB_VI[] = {
   /*S_LBL_HOWTO*/             "Cach dung", // EN: "How to"
   /*S_HOWTO_CAP*/             "Giao dien Arduino OBI + cong COM nay", // EN: "Arduino OBI interface + this COM port"
   /*S_W_F0513_UNVALIDATED*/   "F0513: co the khong duy tri", // EN: "F0513 chip: unlock may not hold."
-};
+  /*S_DUMMY_DGREE*/           "",    //
+  };
 static_assert(sizeof(STRTAB_VI) / sizeof(STRTAB_VI[0]) == S_COUNT,
               "strings_vi.h: one entry per StrId, in enum order");
 #endif // ENABLE_VI

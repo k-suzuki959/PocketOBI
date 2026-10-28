@@ -238,7 +238,7 @@ static void drawLauncherTile(int i) {
   tft.drawBitmap(cx - ICON_W / 2, y + TILE_ICON_Y, ic, ICON_W, ICON_H, icc);
   if (i == 0) {                                  // Battery: V + verdict under the icon (verdict colour)
     char ms[48];
-    if (bat.valid) { snprintf(ms, sizeof(ms), "%.1fV %s", bat.packVoltage, verdictText(v));
+    if (bat.valid) { snprintf(ms, sizeof(ms), "%.2fV %s", bat.packVoltage, verdictText(v));
                      tft.setTextColor(verdictColor(v)); }
     else           { snprintf(ms, sizeof(ms), "%s", tr(S_NO_PACK)); tft.setTextColor(COL_MUTED); }
     tft.setFont(NULL); tft.setTextSize(1);
@@ -305,8 +305,13 @@ static void diagFinding(Finding &f) {
 }
 // Temperature value as the pack reports it: "cell/board C", or a single sensor.
 static void fmtTemp(char *out, size_t n) {
-  if (bat.boardTempValid) snprintf(out, n, "%.0f/%.0f C", bat.tempCell, bat.tempMosfet);
-  else                    snprintf(out, n, "%.0f C", bat.tempCell);   // single sensor
+#if ENABLE_CJK
+  if (bat.boardTempValid) snprintf(out, n, "%.1f / %.1f ℃", bat.tempCell, bat.tempMosfet);
+  else                    snprintf(out, n, "%.1f C", bat.tempCell);   // single sensor
+#else
+  if (bat.boardTempValid) snprintf(out, n, "%.1f / %.1f C", bat.tempCell, bat.tempMosfet);
+  else                    snprintf(out, n, "%.1f C", bat.tempCell);   // single sensor
+#endif
 }
 void drawBatteryOverview() {
   header(bat.valid ? bat.model : tr(S_BATTERY));
@@ -324,7 +329,7 @@ void drawBatteryOverview() {
     // Pinned sensor = confirmed fault (red); spread-only = empirical suspicion (orange, explained on Health).
     const uint16_t tcol = tPinned ? COL_RED : (thermistorSuspect() ? COL_ORANGE : COL_TEXT);
     snprintf(buf, sizeof(buf), "%.2f V", bat.packVoltage);
-    snprintf(cap, sizeof(cap), "%u %s", bat.chargeCount, tr(S_CHARGES));
+    snprintf(cap, sizeof(cap), "%s %u", tr(S_CHARGES), bat.chargeCount);
     kpiCard(GUTTER, y, COL2_W, KPI_H, iconBattery, tr(S_PACK), buf, COL_TEXT, cap);
     fmtTemp(buf, sizeof(buf));
     kpiCard(GUTTER, y + KPI_H + CARD_GAP, COL2_W, KPI_H, iconThermo, tr(S_TEMP), buf, tcol,
@@ -393,8 +398,12 @@ void drawBatteryHealth() {
   char cap[24]; cap[0] = 0;
   if (bat.boardTempValid) {
     const float td = bat.tempMosfet > bat.tempCell ? bat.tempMosfet - bat.tempCell : bat.tempCell - bat.tempMosfet;
+  #if ENABLE_CJK
+    snprintf(cap, sizeof(cap), "%s %.1f ℃", tr(S_SPREAD), td);
+  #else
     snprintf(cap, sizeof(cap), "%s %.1f C", tr(S_SPREAD), td);
-  }
+  #endif
+   }
   kpiCard(kx2, y1 + KPI_H + CARD_GAP, kw, KPI_H, iconThermo, tr(S_TEMP_CB), buf, tc, cap);
 }
 
@@ -639,7 +648,13 @@ void drawDebugRaw() {
   snprintf(b, sizeof(b), "%.2f V", bat.packVoltage);                                   monoKv(kx, y, vx, "PACK", b); y += dy;
   snprintf(b, sizeof(b), "%.2f %.2f %.2f %.2f %.2f", bat.cell[0], bat.cell[1], bat.cell[2], bat.cell[3], bat.cell[4]);
   monoKv(kx, y, vx, "CELLS", b); y += dy;
-  snprintf(b, sizeof(b), "%.0f / %.0f C", bat.tempCell, bat.tempMosfet);              monoKv(kx, y, vx, "TEMP", b); y += dy;
+ snprintf(b, sizeof(b), "%.1f / %.1f " 
+  #if ENABLE_CJK
+    "℃"
+  #else
+    "C"
+  #endif
+  , bat.tempCell, bat.tempMosfet);              monoKv(kx, y, vx, "TEMP", b); y += dy;
   // Raw D6 fault markers (0x58D/0x309), research only, not interpreted (D24).
   snprintf(b, sizeof(b), "%02X/%02X", bat.faultMkA, bat.faultMkB);                      monoKv(kx, y, vx, "FAULTMK", b); y += dy;
   lockCausesText(lockCauses(bat.msg), b, sizeof(b));                                   monoKv(kx, y, vx, "LOCK/CS", b); y += dy;

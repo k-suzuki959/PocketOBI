@@ -464,7 +464,7 @@ void cellBarGroup(int x, int y, int w, int h, const char *label, const char *cap
   const int top = y + SP_5, pitch = (y + h - SP_1 - top) / n;
   const int ix = x + SP_2, iw = w - 2 * SP_2;
   const int vw = big ? gfxWidth(FONT_LEVEL3_REG, "0.00") : txtW("0.00", 1);
-  const int barx = ix + SP_5, barw = iw - SP_5 - vw - SP_2, bh = pitch - 4 < 8 ? pitch - 4 : 8;
+  const int barx = ix + SP_4, barw = iw - SP_5 - vw - SP_2, bh = pitch - 4 < 8 ? pitch - 4 : 8;
   for (int i = 0; i < n; i++) {
     const int ry = top + i * pitch, mid = ry + pitch / 2;
     char t[8];
@@ -474,7 +474,7 @@ void cellBarGroup(int x, int y, int w, int h, const char *label, const char *cap
     int pct = none ? 0 : (int)((v[i] - vMin) / (vMax - vMin) * 100.0f);
     drawProgress(barx, mid - bh / 2, barw, bh, pct, col[i]);
     const uint16_t vc = none ? COL_MUTED2 : (col[i] == COL_GREEN ? COL_TEXT : col[i]);
-    if (none) strcpy(t, "--"); else snprintf(t, sizeof(t), "%.2f", v[i]);
+    if (none) strcpy(t, "--"); else snprintf(t, sizeof(t), "%.3f", v[i]);
     if (big) gfxText(FONT_LEVEL3_REG, ix + iw - gfxWidth(FONT_LEVEL3_REG, t), mid + 5, t, vc);
     else     drawCaption(ix + iw - txtW(t, 1), mid - 4, t, vc);
   }

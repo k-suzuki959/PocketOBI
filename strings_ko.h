@@ -17,6 +17,7 @@
 #include "strings_i18n.h"
 
 #if ENABLE_CJK
+#if ENABLE_KO
 const char* const STRTAB_KO[] = {
   /*S_BATTERY*/               "배터리", // EN: "Battery"
   /*S_REPAIR*/                "수리", // EN: "Repair"
@@ -179,7 +180,9 @@ const char* const STRTAB_KO[] = {
   /*S_LBL_HOWTO*/             "사용법", // EN: "How to"
   /*S_HOWTO_CAP*/             "Arduino OBI + 이 COM 포트", // EN: "Arduino OBI interface + this COM port"
   /*S_W_F0513_UNVALIDATED*/   "F0513: 해제가 유지 안 될 수 있음", // EN: "F0513 chip: unlock may not hold."
-};
+  /*S_DUMMY_DGREE*/           "",    // ℃  DEGREE CELSIUS
+  };
 static_assert(sizeof(STRTAB_KO) / sizeof(STRTAB_KO[0]) == S_COUNT,
               "strings_ko.h: one entry per StrId, in enum order");
+#endif // ENABLE_KO
 #endif // ENABLE_CJK

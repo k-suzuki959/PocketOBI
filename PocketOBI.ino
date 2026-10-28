@@ -141,9 +141,15 @@ bool aboutCrashDrawn = false;
 int lang = LANG_EN;
 const char* tr(StrId id) {   // prototype in pocketobi.h
 #if ENABLE_CJK
-  if (lang == LANG_JA) return STRTAB_JA[id] ? STRTAB_JA[id] : STRTAB[id][LANG_EN];
-  if (lang == LANG_KO) return STRTAB_KO[id] ? STRTAB_KO[id] : STRTAB[id][LANG_EN];
-  if (lang == LANG_ZH) return STRTAB_ZH[id] ? STRTAB_ZH[id] : STRTAB[id][LANG_EN];
+  #if ENABLE_JA
+    if (lang == LANG_JA) return STRTAB_JA[id] ? STRTAB_JA[id] : STRTAB[id][LANG_EN];
+  #endif
+  #if ENABLE_KO
+    if (lang == LANG_KO) return STRTAB_KO[id] ? STRTAB_KO[id] : STRTAB[id][LANG_EN];
+  #endif
+  #if ENABLE_ZH
+    if (lang == LANG_ZH) return STRTAB_ZH[id] ? STRTAB_ZH[id] : STRTAB[id][LANG_EN];
+  #endif
 #endif
 #if ENABLE_VI
   if (lang == LANG_VI) return STRTAB_VI[id] ? STRTAB_VI[id] : STRTAB[id][LANG_EN];
