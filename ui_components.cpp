@@ -9,7 +9,21 @@
 // smooth-font helpers (labels/chrome). Classic font stays for data/values.
 // In the JA build the print draws Japanese itself (PocketTFT); only the width differs, because
 // getTextBounds() does not know the bitmap glyphs (it would count every kanji as 0 px).
+// int gfxWidth(const GFXfont *f, const char *s) {
 int gfxWidth(const GFXfont *f, const char *s) {
+if (f == FONT_LEVEL3_REG) {
+  tft.setFont(f); tft.setTextSize(1);
+  int16_t x1, y1;
+    uint16_t charWN, charWP, charH; 
+  int totalWidth = 0;
+  tft.getTextBounds("8", 0, 0, &x1, &y1, &charWN, &charH);
+  tft.getTextBounds(".", 0, 0, &x1, &y1, &charWP, &charH);
+   for (int i = 0; s[i] != '\0'; i++) {
+        totalWidth += (s[i] == '.') ? (charWP + 2) : (charWN + 1);
+  }
+  tft.setFont(NULL);
+  return totalWidth ;
+}
 #if ENABLE_CJK
   if (cjkHasWide(s)) return cjkWidth(f, s);
 #endif
@@ -19,6 +33,20 @@ int gfxWidth(const GFXfont *f, const char *s) {
   return w;
 }
 int gfxText(const GFXfont *f, int x, int baseY, const char *s, uint16_t col) {
+if (f == FONT_LEVEL3_REG) {
+  tft.setFont(f); tft.setTextSize(1); tft.setTextColor(col);
+  int16_t x1, y1; uint16_t charWN, charWP, charH; 
+  tft.getTextBounds("8", 0, 0, &x1, &y1, &charWN, &charH);
+  tft.getTextBounds(".", 0, 0, &x1, &y1, &charWP, &charH);
+  int currentX = x;
+  for (int i = 0; s[i] != '\0'; i++) {
+    tft.setCursor(currentX, baseY);
+    tft.print(s[i]);
+    currentX += (s[i] == '.') ? (charWP + 2) : (charWN + 1);
+  }
+  tft.setFont(NULL);
+  return currentX - x;
+}
 #if ENABLE_CJK
   if (cjkHasWide(s)) {
     tft.setFont(f); tft.setTextSize(1); tft.setTextColor(col);
