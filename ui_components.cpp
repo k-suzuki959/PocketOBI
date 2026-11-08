@@ -9,7 +9,6 @@
 // smooth-font helpers (labels/chrome). Classic font stays for data/values.
 // In the JA build the print draws Japanese itself (PocketTFT); only the width differs, because
 // getTextBounds() does not know the bitmap glyphs (it would count every kanji as 0 px).
-// int gfxWidth(const GFXfont *f, const char *s) {
 int gfxWidth(const GFXfont *f, const char *s) {
 if (f == FONT_LEVEL3_REG) {
   tft.setFont(f); tft.setTextSize(1);

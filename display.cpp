@@ -306,7 +306,7 @@ static void diagFinding(Finding &f) {
 // Temperature value as the pack reports it (0.1 K steps): "cell/board C", or a single sensor.
 // The unit is a string (S_DEG_C) so a language can use its own sign (#35).
 static void fmtTemp(char *out, size_t n) {
-  if (bat.boardTempValid) snprintf(out, n, "%.1f %.1f %s", bat.tempCell, bat.tempMosfet, tr(S_DEG_C)); //suzuki
+  if (bat.boardTempValid) snprintf(out, n, "%.1f %.1f %s", bat.tempCell, bat.tempMosfet, tr(S_DEG_C));
   else                    snprintf(out, n, "%.1f %s", bat.tempCell, tr(S_DEG_C));   // single sensor
 }
 void drawBatteryOverview() {
