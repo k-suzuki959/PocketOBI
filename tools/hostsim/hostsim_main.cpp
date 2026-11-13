@@ -32,11 +32,11 @@ static void fixturePack() {
   bat.capacityAh = 5.0f;
   bat.batteryType = 0;
   bat.overloadPct = 12; bat.overdischargePct = 8; bat.healthEstPct = 87;
-  const float c[5] = { 3.98f, 3.97f, 3.99f, 3.96f, 3.98f };
+  const float c[5] = { 4.089f, 3.911f, 3.999f, 3.962f, 4.011f };
   float sum = 0, mn = 9, mx = 0;
   for (int i = 0; i < 5; i++) { bat.cell[i] = c[i]; sum += c[i]; if (c[i] < mn) mn = c[i]; if (c[i] > mx) mx = c[i]; }
   bat.packVoltage = sum; bat.cellDiff = mx - mn;
-  bat.tempCell = 22.4f; bat.tempMosfet = 23.1f; bat.boardTempValid = true;
+  bat.tempCell = 23.4f; bat.tempMosfet = 23.1f; bat.boardTempValid = true;
   bat.extValid = true; bat.socRaw = 812; bat.odEventCount = 3; bat.olEventCount = 5;
   bat.odWearPct = round5up(bat.odEventCount, bat.chargeCount);
   bat.olWearPct = round5up(bat.olEventCount, bat.chargeCount);
