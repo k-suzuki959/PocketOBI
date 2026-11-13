@@ -101,7 +101,7 @@ const char* const STRTAB_JA[] = {
   /*S_TOAST_FIXHW*/           "先にハードを修理してください", // EN: "Fix hardware first"
   /*S_TOAST_NOTHING*/         "修理不要", // EN: "Nothing to repair"
   /*S_WORKING*/               "処理中...", // EN: "Working..."
-  /*S_FRAME_STORE_PC*/        "フレームメモリ修復 -> 保存 -> 電源再投入", // EN: "repair frame  ->  store  ->  power-cycle"
+  /*S_FRAME_STORE_PC*/        "フレームメモリ修復⇒保存→電源再投入", // EN: "repair frame  ->  store  ->  power-cycle"
   /*S_TEMP_CB*/               "セル／基板", // EN: "Cell/Board"
   /*S_CALIBRATE*/             "タッチ位置の調整", // EN: "Calibrate touch"
   /*S_CAL_TAP*/               "的をタッチしてください", // EN: "Tap the target"
