@@ -26,13 +26,13 @@ static void base() {
   const uint8_t rom[8] = { 0x2C, 0x41, 0x7E, 0x13, 0x00, 0x00, 0x00, 0x9A };
   memcpy(bat.romId, rom, 8);
   bat.chargeCount = 127;
-  bat.mfgYear = 2021; bat.mfgMonth = 6; bat.mfgDay = 14;
+  bat.mfgYear = 2021; bat.mfgMonth = 11; bat.mfgDay = 14; //suzuki
   bat.asmY = 21; bat.asmM = 6; bat.asmD = 2;
   bat.capacityAh = 5.0f;
   bat.overloadPct = 12; bat.overdischargePct = 8; bat.healthEstPct = 87;
-  const float c[5] = { 3.98f, 3.97f, 3.99f, 3.96f, 3.98f };
+  const float c[5] = { 4.082f, 3.933f, 4.111f, 3.999f, 3.989f };//suzuki
   for (int i = 0; i < 5; i++) bat.cell[i] = c[i];
-  bat.tempCell = 22.4f; bat.tempMosfet = 23.1f; bat.boardTempValid = true;
+  bat.tempCell = 28.4f; bat.tempMosfet = 23.1f; bat.boardTempValid = true;//suzuki
   bat.extValid = true; bat.socRaw = 812; bat.odEventCount = 3; bat.olEventCount = 5;
   frameWithLock(bat.msg, false);
   cellCount = 5;
